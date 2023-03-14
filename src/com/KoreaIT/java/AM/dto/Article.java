@@ -7,14 +7,16 @@ public class Article extends Dto{
 	
 	public String title;
 	public String content;
+	public int memberId;
 	public int views;
 	
-	public Article(String title, String content) {
+	public Article(String title, String content, int memberId) {
 		this.id = ++lastArticleId;
 		this.regDate = Util.getNow();
 		this.modDate = regDate;
 		this.title = title;
 		this.content = content;
+		this.memberId = id;
 		this.views = 0;
 	}
 }

@@ -15,20 +15,20 @@ public class App {
 	List<Member> members;
 	
 	public App() {
-		articles = new ArrayList<Article>();
-		members = new ArrayList<Member>();
+		
 	}
 	
 	public void start() {
 		Scanner sc = new Scanner(System.in);
 		
-		MemberController memberController = new MemberController(members,sc);
-		ArticleController articleController = new ArticleController(articles,sc);
+		MemberController memberController = new MemberController(sc);
+		ArticleController articleController = new ArticleController(sc);
 		Controller controller;
 		
 		System.out.println("==게시판 프로그램==");
 		
 		articleController.makeTestData();
+		memberController.makeTestData();
 		
 		while (true) {
 			
@@ -36,7 +36,10 @@ public class App {
 			String command = sc.nextLine().trim();
 			
 			if(command.equals("exit")) {break;}
-			if(command.equals("")) {System.out.println("명령어를 입력해주세요.");}
+			if(command.equals("")) {
+				System.out.println("명령어를 입력해주세요.");
+				break;
+				}
 			
 			String[] commandDiv = command.split(" ");
 			String controllerName = commandDiv[0];
@@ -46,49 +49,43 @@ public class App {
 			}
 			String actionMethodName = commandDiv[1];
 			
-			
+			String checkLogin = controllerName + "/" + actionMethodName;
 			
 			controller = null;
 			
 			if(controllerName.equals("article")) {
 				controller = articleController;
 			}
-			else if(controllerName.equals("controller")) {
+			else if(controllerName.equals("member")) {
 				controller = memberController;
 			}
-			else System.out.println("존재하지 않는 명령어 입니다.");
+			else {
+				System.out.println("존재하지 않는 명령어 입니다.");
+				continue;
+			}
+			
+			switch(checkLogin) {
+			case "article/write":
+			case "article/modify":
+			case "article/delete":
+			case "member/logout":
+			case "member/profile":
+				if(Controller.isLogin() == false) {
+					System.out.println("먼저 로그인을 해주세요.");
+					continue;
+				}
+			}
+			
+			switch(checkLogin) {
+			case "member/login":
+			case "member/join":
+				if(Controller.isLogin()) {
+					System.out.println("먼저 로그아웃을 해주세요.");
+					continue;
+				}
+			}
 			
 			controller.doAction(actionMethodName, command);
-			
-			
-			
-			
-			
-			
-			
-			if(command.startsWith("list")) {
-				articleController.doList(command);
-			}
-
-			else if(command.equals("write")) {
-				articleController.doWrite();
-			}
-
-			else if(command.startsWith("detail")){
-				articleController.doDetail(command);
-			}
-			
-			else if(command.startsWith("modify")){
-				articleController.doModify(command);
-			}
-			
-			else if(command.startsWith("delete")){
-				articleController.doDelete(command);
-			}
-			
-			else if(command.equals("join")) {
-				memberController.doJoin();
-			}
 		}
 		
 		System.out.println("==프로그램 종료==");
