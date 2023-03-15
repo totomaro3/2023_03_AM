@@ -1,22 +1,11 @@
 package com.KoreaIT.java.AM;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
-import com.KoreaIT.java.AM.controller.ArticleController;
 import com.KoreaIT.java.AM.controller.Controller;
+import com.KoreaIT.java.AM.controller.ArticleController;
 import com.KoreaIT.java.AM.controller.MemberController;
-import com.KoreaIT.java.AM.dto.Article;
-import com.KoreaIT.java.AM.dto.Member;
 
 public class App {
-	
-	List<Article> articles;
-	List<Member> members;
-	
-	public App() {
-		
-	}
 	
 	public void start() {
 		Scanner sc = new Scanner(System.in);
@@ -38,7 +27,7 @@ public class App {
 			if(command.equals("exit")) {break;}
 			if(command.equals("")) {
 				System.out.println("명령어를 입력해주세요.");
-				break;
+				continue;
 				}
 			
 			String[] commandDiv = command.split(" ");

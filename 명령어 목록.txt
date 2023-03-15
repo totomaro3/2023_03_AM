@@ -1,0 +1,12 @@
+article list
+article write
+article detail
+article modify
+article delete
+
+member join
+member login
+member logout
+member profile
+member list
+
