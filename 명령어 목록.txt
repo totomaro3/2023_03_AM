@@ -9,4 +9,5 @@ member login
 member logout
 member profile
 member list
-
+member modify
+member delete

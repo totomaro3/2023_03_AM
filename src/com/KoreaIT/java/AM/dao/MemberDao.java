@@ -2,7 +2,6 @@ package com.KoreaIT.java.AM.dao;
 
 import java.util.*;
 
-import com.KoreaIT.java.AM.dto.member;
 import com.KoreaIT.java.AM.dto.Member;
 
 public class MemberDao extends Dao {
@@ -16,6 +15,10 @@ public class MemberDao extends Dao {
 	public void add(Member member) {
 		members.add(member);
 		lastId++;
+	}
+	
+	public void remove(Member member) {
+		members.remove(member);
 	}
 	
 	public int getLastId() {
@@ -40,4 +43,15 @@ public class MemberDao extends Dao {
 		}
 		return members;
 	}
+	
+	public Member getMemberById(String id) {
+		for (Member member : members) {
+			if (member.loginId.equals(id)) {
+				return member;
+			}
+		}
+		return null;
+	}
+
+	
 }

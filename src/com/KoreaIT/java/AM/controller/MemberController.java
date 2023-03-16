@@ -1,20 +1,19 @@
 package com.KoreaIT.java.AM.controller;
 
+import java.text.DecimalFormat;
 import java.util.*;
 
-import com.KoreaIT.java.AM.Container.Container;
+import com.KoreaIT.java.AM.container.Container;
 import com.KoreaIT.java.AM.dto.Member;
 import com.KoreaIT.java.AM.service.MemberService;
 
 public class MemberController extends Controller {
 	
-	//private List<Member> members;
 	private Scanner sc;
 	private String command;
 	private MemberService memberService;
 	
 	public MemberController(Scanner sc) {
-		//this.members = Container.memberDao.members;
 		this.memberService = Container.memberService;
 		this.sc = sc;
 	}
@@ -35,6 +34,12 @@ public class MemberController extends Controller {
 		case "profile":
 			doProfile();
 			break;
+		case "modify":
+			doModify();
+			break;
+		case "delete":
+			doDelete();
+			break;
 		case "list":
 			doList();
 			break;
@@ -44,6 +49,7 @@ public class MemberController extends Controller {
 	}
 	
 	private void doJoin(){
+		int id = memberService.setNewId();
 		String loginId = null;
 		String loginPw = null;
 		String name = null;
@@ -57,7 +63,7 @@ public class MemberController extends Controller {
 				continue;
 			}
 			
-			if(getMemberById(loginId) == null) break;
+			if(memberService.getMemberById(loginId) == null) break;
 			else {
 				System.out.println("동일한 ID가 있습니다.");
 				continue;
@@ -91,12 +97,10 @@ public class MemberController extends Controller {
 				continue;
 			}
 			break;
-		}
-		
-		int id = Container.memberDao.setNewId();                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+		}                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
 		
 		Member member = new Member(id, loginId, loginPw,name);
-		Container.memberDao.add(member);
+		memberService.add(member);
 		System.out.println(member.id+"번 회원이 가입되었습니다.");
 	}
 	
@@ -104,6 +108,7 @@ public class MemberController extends Controller {
 		
 		String id = null;
 		String pw = null;
+		int abnormalLogin = 0;
 		
 		System.out.print("로그인 아이디 : ");
 		id = sc.nextLine();
@@ -113,26 +118,39 @@ public class MemberController extends Controller {
 			id = sc.nextLine();
 		}
 		
-		while (true) {
+		System.out.print("로그인 비밀번호 : ");
+		pw = sc.nextLine();
+		while (pw.length() == 0) {
+			System.out.println("비밀번호를 입력해 주십시오");
 			System.out.print("로그인 비밀번호 : ");
 			pw = sc.nextLine();
-			
-			if(pw.length() == 0) {
-				System.out.println("비밀번호를 입력해 주십시오");
-				continue;
-			}
-			break;
 		}
 		
-		Member member = getMemberById(id);
+		Member member = memberService.getMemberById(id);
 		
 		if(member == null) {
 			System.out.println("아이디가 일치하지 않습니다.");
+			abnormalLogin++;
+			
+			/*
+			if(abnormalLogin >= 5) {
+				System.out.println("비정상적인 로그인이 감지되었습니다.");
+				System.out.println("아래의 번호를 똑같이 입력해 주십시오.");
+				DecimalFormat df = new DecimalFormat("#");
+				String num = df.format(Math.random()*1000000);
+				System.out.printf(num);
+				String s = sc.nextLine();
+				if(!num.equals(s)) {
+					System.out.println("");
+				}
+			}
+			*/
 			return;
 		}
 		
 		if(member.loginPw.equals(pw) == false) {
 			System.out.println("비밀번호가 일치하지 않습니다.");
+			abnormalLogin++;
 			return;
 		}
 		
@@ -172,13 +190,27 @@ public class MemberController extends Controller {
 		}
 	}
 	
-	private Member getMemberById(String id) {
-		for (Member member : members) {
-			if (member.loginId.equals(id)) {
-				return member;
-			}
-		}
-		return null;
+	private void doModify() {
+		
+		System.out.print("새로운 아이디 : ");
+		String id = sc.nextLine();
+		System.out.print("새로운 비밀번호 : ");
+		String pw = sc.nextLine();
+		
+		loginMember.loginId = id;
+		loginMember.loginPw = pw;
+		
+		System.out.print("멤버 수정이 완료되었습니다.");
+	}
+	
+	private void doDelete() {
+		memberService.remove(loginMember);
+		
+		System.out.print("멤버 탈퇴가 완료되었습니다.");
+		
+		loginMember = null;
+		
+		System.out.print("자동으로 로그아웃 됩니다.");
 	}
 	
 	public void makeTestData() {
@@ -189,11 +221,15 @@ public class MemberController extends Controller {
 			String loginPw = ""+(i+1);
 			String name = "name"+(i+1);
 			
-			int id = Container.memberDao.setNewId();     
+			int id = memberService.setNewId();     
 			Member member = new Member(id, loginId, loginPw, name);
 			
-			Container.memberDao.add(member);
+			memberService.add(member);
 		}
 		System.out.println("테스트를 위한 멤버 데이터를 생성합니다.");
 	}
 }
+
+//비정상적인 로그인
+//회원정보 수정
+//회원 탈퇴

@@ -40,7 +40,6 @@ public class ArticleDao extends Dao {
 	}
 	
 	private int getArticleIndex(int id) {
-		
 		for (int i = 0; i < articles.size(); i++) {
 			Article article = articles.get(i);
 			if (article.id == id) {

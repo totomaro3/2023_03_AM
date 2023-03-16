@@ -2,7 +2,7 @@ package com.KoreaIT.java.AM.service;
 
 import java.util.List;
 
-import com.KoreaIT.java.AM.Container.Container;
+import com.KoreaIT.java.AM.container.Container;
 import com.KoreaIT.java.AM.dao.ArticleDao;
 import com.KoreaIT.java.AM.dao.MemberDao;
 import com.KoreaIT.java.AM.dto.Article;
@@ -18,9 +18,26 @@ public class MemberService {
 	
 	public List<Member> listMembers(String searchKeyword) {
 		
-		List<Member> members = memberDao.getArticles(searchKeyword);
+		List<Member> members = memberDao.getmembers(searchKeyword);
 		
 		return members;
 	}
 
+	public Member getMemberById(String id) {
+		Member member = memberDao.getMemberById(id);
+		return member;
+	}
+
+	public int setNewId() {
+		return  memberDao.setNewId();
+	}
+
+	public void add(Member member) {
+		memberDao.add(member);
+	}
+
+	public void remove(Member member) {
+		memberDao.remove(member);
+		
+	}
 }

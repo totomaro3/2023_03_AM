@@ -1,4 +1,4 @@
-package com.KoreaIT.java.AM.Container;
+package com.KoreaIT.java.AM.container;
 
 import com.KoreaIT.java.AM.dao.ArticleDao;
 import com.KoreaIT.java.AM.dao.MemberDao;

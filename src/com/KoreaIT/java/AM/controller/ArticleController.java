@@ -2,7 +2,7 @@ package com.KoreaIT.java.AM.controller;
 
 import java.util.*;
 
-import com.KoreaIT.java.AM.Container.Container;
+import com.KoreaIT.java.AM.container.Container;
 import com.KoreaIT.java.AM.dto.Article;
 import com.KoreaIT.java.AM.dto.Member;
 import com.KoreaIT.java.AM.service.ArticleService;
@@ -41,7 +41,6 @@ public class ArticleController extends Controller {
 			break;
 		default:
 			System.out.println("해당 기능은 사용할 수 없습니다.");
-				
 		}
 	}
 	
@@ -185,8 +184,6 @@ public class ArticleController extends Controller {
 		articleService.remove(foundArticle);
 		System.out.println(id+"번 게시물이 삭제되었습니다.");
 	}
-	
-	
 	
 	public void makeTestData() {
 		for(int i = 0; i<3; i++)

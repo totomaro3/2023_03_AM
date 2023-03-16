@@ -59,6 +59,8 @@ public class App {
 			case "article/delete":
 			case "member/logout":
 			case "member/profile":
+			case "member/modify":
+			case "member/delete":
 				if(Controller.isLogin() == false) {
 					System.out.println("먼저 로그인을 해주세요.");
 					continue;

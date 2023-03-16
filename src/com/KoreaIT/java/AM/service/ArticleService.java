@@ -2,7 +2,7 @@ package com.KoreaIT.java.AM.service;
 
 import java.util.List;
 
-import com.KoreaIT.java.AM.Container.Container;
+import com.KoreaIT.java.AM.container.Container;
 import com.KoreaIT.java.AM.dao.ArticleDao;
 import com.KoreaIT.java.AM.dto.Article;
 
