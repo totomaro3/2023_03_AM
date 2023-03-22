@@ -16,7 +16,7 @@ public class ArticleService {
 
 	public List<Article> listArticles(String searchKeyword) {
 		
-		List<Article> articles = articleDao.getArticles(searchKeyword);
+		List<Article> articles = articleDao.listArticles(searchKeyword);
 		
 		return articles;
 	}

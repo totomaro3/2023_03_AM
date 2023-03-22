@@ -14,7 +14,6 @@ public class MemberDao extends Dao {
 	
 	public void add(Member member) {
 		members.add(member);
-		lastId++;
 	}
 	
 	public void remove(Member member) {
@@ -44,14 +43,36 @@ public class MemberDao extends Dao {
 		return members;
 	}
 	
-	public Member getMemberById(String id) {
+	public Member getMemberById(int memberId) {
 		for (Member member : members) {
-			if (member.loginId.equals(id)) {
+			if (member.loginId.equals(memberId)) {
 				return member;
 			}
 		}
 		return null;
 	}
-
 	
+	public Member getMemberByLoginId(String loginId) {
+		int i = 0;
+		for (Member member : members) {
+			if (member.loginId.equals(loginId)) {
+				return member;
+			}
+			i++;
+		}
+		return null;
+	}
+
+	public String getMemberNameById(int memberId) {
+		for (Member member : members) {
+			if (member.loginId.equals(memberId)) {
+				return member.name;
+			}
+		}
+		return null;
+	}
+
+	public List<Member> getMembers() {
+		return members;
+	}
 }

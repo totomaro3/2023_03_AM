@@ -17,15 +17,12 @@ public class MemberService {
 	}
 	
 	public List<Member> listMembers(String searchKeyword) {
-		
 		List<Member> members = memberDao.getmembers(searchKeyword);
-		
 		return members;
 	}
 
-	public Member getMemberById(String id) {
-		Member member = memberDao.getMemberById(id);
-		return member;
+	public Member getMemberById(int id) {
+		return memberDao.getMemberById(id);
 	}
 
 	public int setNewId() {
@@ -38,6 +35,18 @@ public class MemberService {
 
 	public void remove(Member member) {
 		memberDao.remove(member);
+	}
+
+	public String getMemberNameById(int memberId) {
 		
+		return memberDao.getMemberNameById(memberId);
+	}
+
+	public Member getMemberByLoginId(String loginId) {
+		return memberDao.getMemberByLoginId(loginId);
+	}
+	
+	public List<Member> getMembers() {
+		return memberDao.getMembers();
 	}
 }

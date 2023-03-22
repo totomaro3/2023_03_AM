@@ -6,6 +6,7 @@ import com.KoreaIT.java.AM.container.Container;
 import com.KoreaIT.java.AM.dto.Article;
 import com.KoreaIT.java.AM.dto.Member;
 import com.KoreaIT.java.AM.service.ArticleService;
+import com.KoreaIT.java.AM.service.MemberService;
 import com.KoreaIT.java.AM.util.Util;
 
 public class ArticleController extends Controller {
@@ -14,9 +15,11 @@ public class ArticleController extends Controller {
 	private String command;
 	
 	private ArticleService articleService;
+	private MemberService memberService;
 	
 	public ArticleController(Scanner sc) {
 		articleService = Container.articleService;
+		memberService = Container.memberService;
 		this.sc = sc;
 	}
 	
@@ -55,7 +58,7 @@ public class ArticleController extends Controller {
 			return;
 		}
 		
-		List<Member> members = Container.memberDao.members;
+		List<Member> members = memberService.getMembers();
 		
 		System.out.println("번호\t|제목\t|작성자\t|조회");
 		for(int i=listArticles.size()-1;i>=0;i--) {
@@ -107,7 +110,7 @@ public class ArticleController extends Controller {
 		
 		String writerName = null;
 		
-		List<Member> members = Container.memberDao.members;
+		List<Member> members = memberService.getMembers();
 		
 		for (Member member : members) {
 			if(foundArticle.memberId == member.id) {
@@ -198,7 +201,7 @@ public class ArticleController extends Controller {
 			article.views = (i + 1) * 10;
 			
 			
-			Container.articleDao.add(article);
+			articleService.add(article);
 		}
 		
 		System.out.println("테스트를 위한 글 데이터를 생성합니다.");

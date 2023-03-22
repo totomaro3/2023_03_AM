@@ -13,7 +13,6 @@ public class ArticleDao extends Dao {
 	
 	public void add(Article article) {
 		articles.add(article);
-		lastId++;
 	}
 	
 	public int getLastId() {
@@ -24,7 +23,7 @@ public class ArticleDao extends Dao {
 		return lastId+1;
 	}
 	
-	public List<Article> getArticles(String searchKeyword) {
+	public List<Article> listArticles(String searchKeyword) {
 		if (searchKeyword.length() > 0) {
 			System.out.println("검색어 : " + searchKeyword);
 			List<Article> listArticles = new ArrayList<>();
@@ -39,26 +38,16 @@ public class ArticleDao extends Dao {
 		return articles;
 	}
 	
-	private int getArticleIndex(int id) {
+	public Article getArticle(int id) {
 		for (int i = 0; i < articles.size(); i++) {
 			Article article = articles.get(i);
 			if (article.id == id) {
-				return i;
+				return article;
 			}
 		}
-		return -1;
-	}
-
-	public Article getArticle(int id) {
-		int index = getArticleIndex(id);
-
-		if (index != -1) {
-			return articles.get(index);
-		}
-
 		return null;
 	}
-
+	
 	public void remove(Article article) {
 		articles.remove(article);
 	}

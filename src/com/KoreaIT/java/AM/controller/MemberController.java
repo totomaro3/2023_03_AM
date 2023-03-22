@@ -1,6 +1,5 @@
 package com.KoreaIT.java.AM.controller;
 
-import java.text.DecimalFormat;
 import java.util.*;
 
 import com.KoreaIT.java.AM.container.Container;
@@ -63,7 +62,7 @@ public class MemberController extends Controller {
 				continue;
 			}
 			
-			if(memberService.getMemberById(loginId) == null) break;
+			if(memberService.getMemberByLoginId(loginId) == null) break;
 			else {
 				System.out.println("동일한 ID가 있습니다.");
 				continue;
@@ -106,27 +105,27 @@ public class MemberController extends Controller {
 	
 	private void doLogin() {
 		
-		String id = null;
-		String pw = null;
+		String loginId = null;
+		String loginPw = null;
 		int abnormalLogin = 0;
 		
 		System.out.print("로그인 아이디 : ");
-		id = sc.nextLine();
-		while (id.length() == 0) {
+		loginId = sc.nextLine();
+		while (loginId.length() == 0) {
 			System.out.println("아이디를 입력해 주십시오");
 			System.out.print("로그인 아이디 : ");
-			id = sc.nextLine();
+			loginId = sc.nextLine();
 		}
 		
 		System.out.print("로그인 비밀번호 : ");
-		pw = sc.nextLine();
-		while (pw.length() == 0) {
+		loginPw = sc.nextLine();
+		while (loginPw.length() == 0) {
 			System.out.println("비밀번호를 입력해 주십시오");
 			System.out.print("로그인 비밀번호 : ");
-			pw = sc.nextLine();
+			loginPw = sc.nextLine();
 		}
 		
-		Member member = memberService.getMemberById(id);
+		Member member = memberService.getMemberByLoginId(loginId);
 		
 		if(member == null) {
 			System.out.println("아이디가 일치하지 않습니다.");
@@ -148,7 +147,7 @@ public class MemberController extends Controller {
 			return;
 		}
 		
-		if(member.loginPw.equals(pw) == false) {
+		if(member.loginPw.equals(loginPw) == false) {
 			System.out.println("비밀번호가 일치하지 않습니다.");
 			abnormalLogin++;
 			return;
@@ -200,28 +199,28 @@ public class MemberController extends Controller {
 		loginMember.loginId = id;
 		loginMember.loginPw = pw;
 		
-		System.out.print("멤버 수정이 완료되었습니다.");
+		System.out.println("멤버 수정이 완료되었습니다.");
 	}
 	
 	private void doDelete() {
 		memberService.remove(loginMember);
 		
-		System.out.print("멤버 탈퇴가 완료되었습니다.");
+		System.out.println("멤버 탈퇴가 완료되었습니다.");
 		
 		loginMember = null;
 		
-		System.out.print("자동으로 로그아웃 됩니다.");
+		System.out.println("자동으로 로그아웃 됩니다.");
 	}
 	
 	public void makeTestData() {
 		
 		for(int i = 0; i<3; i++)
 		{
+			int id = memberService.setNewId();
 			String loginId = ""+(i+1);
 			String loginPw = ""+(i+1);
 			String name = "name"+(i+1);
-			
-			int id = memberService.setNewId();     
+
 			Member member = new Member(id, loginId, loginPw, name);
 			
 			memberService.add(member);
@@ -231,5 +230,3 @@ public class MemberController extends Controller {
 }
 
 //비정상적인 로그인
-//회원정보 수정
-//회원 탈퇴
